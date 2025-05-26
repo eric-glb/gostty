@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -13,6 +14,9 @@ import (
 
 	"golang.org/x/term"
 )
+
+//go:embed animation-data.json
+var animationJSON []byte
 
 // Frame represents a single animation frame
 type Frame struct {
@@ -88,13 +92,9 @@ func (a *Animation) Initialize(animationData [][]string) {
 }
 
 // loadAnimationData loads animation data from a JSON file
-func loadAnimationData(path string) ([][]string, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
+func loadAnimationDataFromEmbedded() ([][]string, error) {
 	var animationData [][]string
-	err = json.Unmarshal(data, &animationData)
+	err := json.Unmarshal(animationJSON, &animationData)
 	if err != nil {
 		return nil, err
 	}
@@ -392,8 +392,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Load animation data from JSON file
-	animationData, err := loadAnimationData("animation-data.json")
+	// Load animation data from embedded JSON
+	animationData, err := loadAnimationDataFromEmbedded()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to load animation data: %v\n", err)
 		os.Exit(1)
