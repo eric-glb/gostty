@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/signal"
@@ -84,6 +85,20 @@ func (a *Animation) Initialize(animationData [][]string) {
 
 		a.frames[frameIndex] = Frame{Lines: processedLines}
 	}
+}
+
+// loadAnimationData loads animation data from a JSON file
+func loadAnimationData(path string) ([][]string, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var animationData [][]string
+	err = json.Unmarshal(data, &animationData)
+	if err != nil {
+		return nil, err
+	}
+	return animationData, nil
 }
 
 // processColorCodes processes color tags in a line
@@ -377,15 +392,22 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Create animation and terminal instances
+	// Load animation data from JSON file
+	animationData, err := loadAnimationData("animation-data.json")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to load animation data: %v\n", err)
+		os.Exit(1)
+	}
+
+	// Initialize animation and terminal
 	animation := NewAnimation()
 	terminal := NewTerminal()
 
-	// Set the highlight color
+	// Set highlight color based on user input
 	animation.SetHighlightColor(config.colorArg)
 
-	// Initialize animation with data
-	animation.Initialize(AnimationData)
+	// Initialize animation with loaded data
+	animation.Initialize(animationData)
 
 	// Setup signal handling for cleanup
 	c := make(chan os.Signal, 1)
