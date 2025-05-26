@@ -26,6 +26,12 @@ Go implementation of the iconic <a href="https://ghostty.org">ghostty.org</a> an
 
 [Go 1.18+](https://golang.org/doc/install)
 
+### Install via `go install`
+
+```bash
+go install github.com/ashish0kumar/gostty@latest
+```
+
 ### Build from source
 
 Clone the repo, build the binary, and move it into your `$PATH`
@@ -70,8 +76,8 @@ gostty --colors
 
 ## Notes
 
-- Animation frames are embedded in the binary, so no external animation data file is required or loaded at runtime.
-- Make sure your terminal supports ANSI escape codes and is large enough to render the animation (at least 77x41 characters).
+- Animation frames are embedded in the binary, so no external animation data file is required at runtime.
+- Make sure your terminal supports ANSI escape codes and is large enough to render the animation (77x41 chars).
 
 ## Acknowledgments
 
