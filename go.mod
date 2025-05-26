@@ -1,4 +1,4 @@
-module gostty
+module github.com/ashish0kumar/gostty
 
 go 1.23.2
 
