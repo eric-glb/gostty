@@ -7,7 +7,7 @@ Go implementation of the iconic <a href="https://ghostty.org">ghostty.org</a> an
 <br>
 
 <div align="center">
-<img src="assets/gostty.gif" width="50%">
+<img src="assets/animation.gif" width="50%">
 </div>
 
 ---
