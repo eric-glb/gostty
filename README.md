@@ -24,7 +24,7 @@ Go implementation of the iconic <a href="https://ghostty.org">ghostty.org</a> an
 
 ### Prerequisites
 
-[Go 1.18+](https://golang.org/doc/install)
+[Go 1.23.2+](https://golang.org/doc/install)
 
 ### Install via `go install`
 
@@ -40,6 +40,16 @@ Clone the repo, build the binary, and move it into your `$PATH`
 git clone https://github.com/ashish0kumar/gostty.git
 cd gostty
 go build
+sudo mv gostty /usr/local/bin/
+```
+
+Alternative (using golang docker container image)
+
+```bash
+git clone https://github.com/ashish0kumar/gostty.git
+cd gostty
+docker pull go:latest
+docker run --rm -ti -v ./:/go/src golang:latest bash -c "cd src; go build -buildvcs=false"
 sudo mv gostty /usr/local/bin/
 ```
 
