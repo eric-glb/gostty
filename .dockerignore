@@ -1,1 +1,9 @@
 gostty
+.git
+.github
+.gitignore
+assets
+Dockerfile
+LICENSE
+Makefile
+

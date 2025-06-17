@@ -7,11 +7,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG UPX_URL
 RUN apt-get update && \
     apt-get install -y xz-utils && \
+    rm -rf /var/lib/apt/lists/* && \
     wget "$UPX_URL" && \
     tar xvfJ "${UPX_URL##*/}"\
       --strip-components=1 \
       -C /usr/local/bin \
-      --wildcards "*/upx"
+      --wildcards "*/upx" && \
+    rm -f "${UPX_URL##*/}"
 
 FROM prereqs AS builder
 ARG PRG
