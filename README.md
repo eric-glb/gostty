@@ -48,7 +48,7 @@ Alternative (using golang docker container image)
 ```bash
 git clone https://github.com/ashish0kumar/gostty.git
 cd gostty
-docker pull go:latest
+docker pull golang:latest
 docker run --rm -ti -v ./:/go/src golang:latest bash -c "cd src; go build -buildvcs=false"
 sudo mv gostty /usr/local/bin/
 ```
