@@ -1,4 +1,5 @@
 ARG UPX_URL=https://github.com/upx/upx/releases/download/v5.0.1/upx-5.0.1-amd64_linux.tar.xz
+ARG PRG=gostty
 
 FROM golang:latest AS prereqs
 SHELL ["/bin/bash", "-c"]
@@ -13,13 +14,14 @@ RUN apt-get update && \
       --wildcards "*/upx"
 
 FROM prereqs AS builder
+ARG PRG
 COPY . /go/src
 WORKDIR /go/src
-RUN CGO_ENABLED=1 go build --ldflags '-linkmode=external -extldflags=-static' && \
-    upx -9 gostty
+RUN go build -buildvcs=false -o $PRG && upx -9 $PRG
 
 FROM scratch
-COPY --from=builder /go/src/gostty /gostty
+ARG PRG
+COPY --from=builder /go/src/$PRG /$PRG
 WORKDIR /
-CMD ["/gostty"]
+ENTRYPOINT ["/$PRG"]
 
